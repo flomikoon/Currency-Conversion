@@ -25,19 +25,18 @@ public class Main {
 
     static CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    public static void sendRequest(int i) {
-        HttpGet get = new HttpGet(BASE_URL + ENDPOINT + "?api_key=" + ACCESS_KEY);
+    public static void sendRequest(int i , String string , String currencyout) {
+        HttpGet get = new HttpGet(BASE_URL + ENDPOINT + "?api_key=" + ACCESS_KEY + "&base=" + string);
 
+        System.out.println(string);
         try {
             CloseableHttpResponse response = httpClient.execute(get);
             HttpEntity entity = response.getEntity();
 
             JSONObject exchangeRates = new JSONObject(EntityUtils.toString(entity));
 
-            System.out.println(i + " USD" + " in EUR : " + i * exchangeRates.getJSONObject("response")
-                    .getJSONObject("rates").getDouble("EUR"));
-            System.out.println(i + " USD" + " in RUB: " + i * exchangeRates.getJSONObject("response")
-                    .getJSONObject("rates").getDouble("RUB"));
+            System.out.println(i + " in " + currencyout + ": " + i * exchangeRates.getJSONObject("response")
+                    .getJSONObject("rates").getDouble(currencyout));
             response.close();
         } catch (IOException | ParseException | JSONException e) {
             e.printStackTrace();
@@ -48,12 +47,16 @@ public class Main {
     public static void main(String[] args) throws IOException{
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
+            System.out.print("Enter the currency you want to convert: ");
+            String currency = reader.readLine();
+            System.out.print("Enter the currency you want to convert to: ");
+            String currencyout = reader.readLine();
             System.out.print("Enter usd: ");
             String string = reader.readLine();
             if(Objects.equals(string, "stop")){
                 break;
             }
-            sendRequest(Integer.parseInt(string));
+            sendRequest(Integer.parseInt(string) , currency , currencyout);
         }
         httpClient.close();
     }
