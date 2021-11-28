@@ -36,6 +36,8 @@ public class Main {
 
             System.out.println(i + " USD" + " in EUR : " + i * exchangeRates.getJSONObject("response")
                     .getJSONObject("rates").getDouble("EUR"));
+            System.out.println(i + " USD" + " in RUB: " + i * exchangeRates.getJSONObject("response")
+                    .getJSONObject("rates").getDouble("RUB"));
             response.close();
         } catch (IOException | ParseException | JSONException e) {
             e.printStackTrace();
