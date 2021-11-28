@@ -25,7 +25,7 @@ public class Main {
 
     static CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    public static void sendRequest(int i , String string , String currencyout) {
+    public static void sendRequest(double i , String string , String currencyout) {
         HttpGet get = new HttpGet(BASE_URL + ENDPOINT + "?api_key=" + ACCESS_KEY + "&base=" + string);
 
         System.out.println(string);
@@ -56,7 +56,7 @@ public class Main {
             if(Objects.equals(string, "stop")){
                 break;
             }
-            sendRequest(Integer.parseInt(string) , currency , currencyout);
+            sendRequest(Double.parseDouble(string), currency , currencyout);
         }
         httpClient.close();
     }
