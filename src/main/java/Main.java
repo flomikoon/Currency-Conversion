@@ -20,24 +20,29 @@ public class Main {
 
     static CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    public static void sendRequest(double i , String string , String currencyout) {
+    public static JSONObject sendRequest(String string) {
         HttpGet get = new HttpGet(BASE_URL + ENDPOINT + "?api_key=" + ACCESS_KEY + "&base=" + string);
+
+        JSONObject exchangeRates = null;
 
         try {
             CloseableHttpResponse response = httpClient.execute(get);
             HttpEntity entity = response.getEntity();
 
-            JSONObject exchangeRates = new JSONObject(EntityUtils.toString(entity));
-
-            System.out.println(i +  " " + string + " in " + currencyout + ": " + i * exchangeRates.getJSONObject("response")
-                    .getJSONObject("rates").getDouble(currencyout));
+            exchangeRates = new JSONObject(EntityUtils.toString(entity));
             response.close();
         } catch (IOException | ParseException | JSONException e) {
             e.printStackTrace();
         }
+        return exchangeRates;
     }
 
-    public static void main(String[] args) throws IOException{
+    public static double getValue(JSONObject exchangeRates , String string , String currencyout) throws JSONException {
+        return Double.parseDouble(string) * exchangeRates.getJSONObject("response")
+                .getJSONObject("rates").getDouble(currencyout);
+    }
+
+    public static void main(String[] args) throws IOException, JSONException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         while (true) {
             System.out.print("Enter the currency you want to convert: ");
@@ -49,7 +54,9 @@ public class Main {
             if(Objects.equals(string, "stop")){
                 break;
             }
-            sendRequest(Double.parseDouble(string), currency , currencyout);
+            JSONObject exchangeRates = sendRequest(currency);
+
+            System.out.println(Double.parseDouble(string) +  " " + string + " in " + currencyout + ": " + getValue(exchangeRates , string , currencyout));
         }
         httpClient.close();
     }
