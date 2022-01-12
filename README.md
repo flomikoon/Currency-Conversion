@@ -1,6 +1,6 @@
-CI for 'main' branch:  [![Java CI with Maven](https://github.com/flomikoon/Currency-Conversion/actions/workflows/ci-maven.yml/badge.svg?branch=master)](https://github.com/flomikoon/Currency-Conversion/actions/workflows/ci-maven.yml)
+CI for 'main' branch:  [![Java CI with Maven](https://github.com/flomikoon/Currency-Conversion/actions/workflows/maven.yml/badge.svg?branch=master)](https://github.com/flomikoon/Currency-Conversion/actions/workflows/maven.yml)
 
-CI for 'develop' branch: [![Java CI with Maven](https://github.com/flomikoon/Currency-Conversion/actions/workflows/ci-maven.yml/badge.svg?branch=develop)](https://github.com/flomikoon/Currency-Conversion/actions/workflows/ci-maven.yml)
+CI for 'develop' branch: [![Java CI with Maven](https://github.com/flomikoon/Currency-Conversion/actions/workflows/maven.yml/badge.svg?branch=develop)](https://github.com/flomikoon/Currency-Conversion/actions/workflows/maven.yml)
 
 
 # Currency-Conversion
